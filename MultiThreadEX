@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    //this is a custom ONCLICK METHOD~!!!!!!!!!
+    //My custom onclick method
   public void onClick(View v) {
       String filename = "numbers.txt";
 
@@ -93,8 +93,14 @@ public class MainActivity extends AppCompatActivity {
             String line = br.readLine();
             int i = 0;
             while (line != null) {
-                items[i] = line;
-                line = br.readLine();
+                try {
+                    Thread.sleep(250);
+                    items[i] = line;
+                    line = br.readLine();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
 
             }
             String everything = sb.toString();
