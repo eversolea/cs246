@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -55,12 +56,15 @@ public class MainActivity extends AppCompatActivity {
     //My custom onclick method
   public void onClick(View v) {
       String filename = "numbers.txt";
+      ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
+      pb.setMax(100);
 
       String text = "1";
 
       for (int i = 2; i <= 10; i++) {
           try {
               Thread.sleep(250);
+              pb.setProgress(i * 10);
               text = text.concat("\n" + i);
           } catch (InterruptedException e) {
               e.printStackTrace();
@@ -86,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
         ListView list2 = (ListView) findViewById(R.id.listView);
         String items[] = new String[10];
 
-
+        ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
+        pb.setMax(100);
+        
         try {
             BufferedReader br = new BufferedReader(new FileReader("file.txt"));
             StringBuilder sb = new StringBuilder();
@@ -95,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             while (line != null) {
                 try {
                     Thread.sleep(250);
+                    pb.setProgress(i*10);
                     items[i] = line;
                     line = br.readLine();
                 } catch (InterruptedException e) {
