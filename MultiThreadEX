@@ -1,0 +1,138 @@
+package test.multithreadex;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+
+    //this is a custom ONCLICK METHOD~!!!!!!!!!
+  public void onClick(View v) {
+      String filename = "numbers.txt";
+
+      String text = "1";
+
+      for (int i = 2; i <= 10; i++) {
+          try {
+              Thread.sleep(250);
+              text = text.concat("\n" + i);
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+          }
+      }
+
+
+      BufferedWriter output = null;
+      try {
+          File file = new File(getApplicationContext().getFilesDir(), filename);
+          output = new BufferedWriter(new FileWriter(file));
+          output.write(text);
+      } catch ( IOException e ) {
+          e.printStackTrace();
+      }
+
+
+  }
+
+
+    public void onClick3(View v) {
+
+        ListView list2 = (ListView) findViewById(R.id.listView);
+        String items[] = new String[10];
+
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("file.txt"));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            int i = 0;
+            while (line != null) {
+                items[i] = line;
+                line = br.readLine();
+
+            }
+            String everything = sb.toString();
+        }
+        catch(java.io.IOException e){
+            e.printStackTrace();
+        }
+
+        ArrayAdapter<String> itemsAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+
+        list2.setAdapter(itemsAdapter);
+    }
+
+
+    public void onClick2(View v) {
+
+        ListView list2 = (ListView) findViewById(R.id.listView);
+        String items[] = {"0","0","0","0","0","0","0","0","0","0","0"};
+        ArrayAdapter<String> itemsAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+
+        list2.setAdapter(itemsAdapter);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+}
